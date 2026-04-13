@@ -1,0 +1,25 @@
+{
+  "/mynotes_address": [
+    {
+      "address": "0xd49EDAd68536ECe81705D17b431fA8C97F0de143",
+      "tag": "DTC",
+      "note": "DENTALCOIN",
+      "addedAt": "2026-03-28",
+      "favorite": true
+    }
+  ],
+  "/mynotes_tx": [
+    {
+      "txHash": "0xc1f67f190b914b1c16e9dfe11df023100f1f30ee7c808884da19ef16f8225021",
+      "note": "dentalcoin",
+      "addedAt": "2026-03-28"
+    }
+  ],
+  "/myaddress": [
+    {
+      "address": "0xd49EDAd68536ECe81705D17b431fA8C97F0de143",
+      "addedAt": "2026-03-30"
+    }
+  ],
+  "/mytokenignore": []
+}
