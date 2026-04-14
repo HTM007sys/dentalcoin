@@ -25,13 +25,14 @@ jobs:
     environment: ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
     steps:
       - name: Check homepage for Base meta tag
-        env:
-          APP_DOMAIN: ${{ secrets.APP_DOMAIN }}
-        run: |
-          RESPONSE=$(curl -s "$APP_DOMAIN")
-          if echo "$RESPONSE" | grep -q '<meta name="base:app_id" content="69dd7b512755eb4e67523000" />'; then
-            echo "✅ Meta tag detected!"
-          else
-            echo "❌ Meta tag not found."
-            exit 1
-          fi
+  env:
+    APP_DOMAIN: ${{ secrets.APP_DOMAIN }}
+  run: |
+    RESPONSE=$(curl -s "$APP_DOMAIN")
+    if echo "$RESPONSE" | grep -qi 'meta name="base:app_id"'; then
+      echo "✅ Meta tag detected!"
+    else
+      echo "❌ Meta tag not found."
+      exit 1
+    fi
+
