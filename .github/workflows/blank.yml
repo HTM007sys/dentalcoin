@@ -6,17 +6,16 @@ on:
       - main
 
 jobs:
-  deploy: verify-meta-tag
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Your deployment steps go here
       - name: Deploy site
         run: |
           echo "🚀 Deploying site..."
-          # add your actual deploy commands
+          # add your actual deploy commands here
 
   verify-meta-tag:
     runs-on: ubuntu-latest
@@ -24,7 +23,7 @@ jobs:
     steps:
       - name: Check homepage for Base meta tag
         run: |
-          RESPONSE=$(<meta name="base:app_id" content="69dd7b512755eb4e67523000" />
+          RESPONSE=$(curl -s https://your-site-url.com)
           if echo "$RESPONSE" | grep -q '<meta name="base:app_id" content="69dd7b512755eb4e67523000" />'; then
             echo "✅ Meta tag detected!"
           else
