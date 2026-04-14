@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - develop
+      - release/*
 
 jobs:
   deploy:
@@ -14,12 +14,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Deploy site
-  run: |
-    echo "🚀 Deploying to ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}..."
-    # Replace with your actual deployment commands
-    # Example: npm run build && npm run deploy
-
+      - name: Install dependencies  
+  run: npm install
+  
   verify-meta-tag:
     runs-on: ubuntu-latest
     needs: deploy
@@ -28,7 +25,8 @@ jobs:
      - name: Check homepage for Base meta tag
   env:
     APP_DOMAIN: ${{ secrets.APP_DOMAIN }}
-  run: |
+  run: npm publish
+  if: github.event_name == 'push'
     RESPONSE=$(curl -s "$APP_DOMAIN")
     echo "Response length: ${#RESPONSE}"
     echo "First 500 chars of response:"
