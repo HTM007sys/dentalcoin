@@ -1,37 +1,15 @@
-name: Deploy and Verify
-
-on:
-  push:
-    branches:
-      - main
-      - develop
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    environment: ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Deploy site
-        run: |
-          echo "🚀 Deploying to ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}..."
-          # add your actual deploy commands here
-
-  verify-meta-tag:
-    runs-on: ubuntu-latest
-    needs: deploy
-    environment: ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
-    steps:
-      - name: Check homepage for Base meta tag
-        env:
-          APP_DOMAIN: ${{ secrets.APP_DOMAIN }}
-        run: |
-          RESPONSE=$(curl -s "$APP_DOMAIN")
-          if echo "$RESPONSE" | grep -q '<meta name="base:app_id" content="69dd7b512755eb4e67523000" />'; then
-            echo "✅ Meta tag detected!"
-          else
-            echo "❌ Meta tag not found."
-            exit 1
-          fi
+- name: Check homepage for Base meta tag
+  env:
+    APP_DOMAIN: ${{ secrets.APP_DOMAIN }}
+  run: |
+    if [ -z "$APP_DOMAIN" ]; then
+      echo "❌ APP_DOMAIN secret is not configured."
+      exit 1
+    fi
+    RESPONSE=$(curl -s "$APP_DOMAIN")
+    if echo "$RESPONSE" | grep -q '<meta name="base:app_id" content="69dd7b512755eb4e67523000" />'; then
+      echo "✅ Meta tag detected!"
+    else
+      echo "❌ Meta tag not found."
+      exit 1
+    fi
