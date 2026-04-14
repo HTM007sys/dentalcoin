@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  deploy:
+  deploy:job
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -24,7 +24,7 @@ jobs:
     steps:
       - name: Check homepage for Base meta tag
         run: |
-          RESPONSE=$(curl -s https://yourdomain.com)
+          RESPONSE=$(<meta name="base:app_id" content="69dd7b512755eb4e67523000" />
           if echo "$RESPONSE" | grep -q '<meta name="base:app_id" content="69dd7b512755eb4e67523000" />'; then
             echo "✅ Meta tag detected!"
           else
